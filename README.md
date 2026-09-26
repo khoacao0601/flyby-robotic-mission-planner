@@ -1,2 +1,2 @@
-# flyby-robotic-mission-planner
+# Copyright (c) 2026 Khoa Cao. All rights reserved.
 
