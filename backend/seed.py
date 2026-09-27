@@ -1,10 +1,15 @@
 # Copyright (c) 2026 Khoa Cao. All rights reserved.
 
-from core.database import SessionLocal
+from core.database import Base, SessionLocal, engine
 from core.security import hash_pass
 from models.user import User
+from models.mission import Mission
 
 def seed_data():
+
+    # Force to create 2 table Users and Missions
+    Base.metadata.create_all(bind=engine)
+
     db = SessionLocal()
     try:
         # Create test Admin account
