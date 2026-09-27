@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Khoa Cao. All rights reserved.
 
 from sqlalchemy import Column, DateTime, Integer, String, func
-from app.core.database import Base
+from core.database import Base
 
 class User(Base):
     __tablename__ = "users"
