@@ -3,7 +3,7 @@
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, func
 from sqlalchemy.dialects.postgresql import JSONB
 
-from app.core.database import Base
+from core.database import Base
 
 class Mission(Base):
     __tablename__ = "missions"
