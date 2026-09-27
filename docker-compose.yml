@@ -5,7 +5,7 @@ version: '3.8'
 services:
   db:
     image: postgres:15-alpine
-    container_name: flyby_robotic_postgres
+    container_name: flyby_robotics_postgres
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -15,6 +15,32 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - flyby_robotics_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: flyby_robotics_backend
+    restart: always
+    environment:
+      POSTGRES_SERVER: db
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password123}
+      POSTGRES_DB: ${POSTGRES_DB:-flyby_db}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - flyby_robotics_network
 
 volumes:
   postgres_data:
+
+networks:
+  flyby_robotics_network:
+    driver: bridge
+
