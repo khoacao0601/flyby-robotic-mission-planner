@@ -1,12 +1,9 @@
 # Copyright (c) 2026 Khoa Cao. All rights reserved.
 
 from sqlalchemy import create_engine
-from app.core.config import DATABASE_URL
+from core.config import DATABASE_URL
 
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
-
-#Connection Pool use credential from DATABASE_URL
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
 #Connection Pool use credential from DATABASE_URL
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
