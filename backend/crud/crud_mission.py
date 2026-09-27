@@ -19,7 +19,7 @@ def get_mission_by_id(db: Session, mission_id: int):
     return db.query(Mission).filter(Mission.id == mission_id).first()
 
 # Create Mission
-def create_mission(db: Session, mission: MissionCreate, creator_id: int):
+def create_mission(db: Session, mission: MissionCreate, created_by_id: int):
     db_mission = Mission(
         name=mission.name,
         description=mission.description,
@@ -28,7 +28,7 @@ def create_mission(db: Session, mission: MissionCreate, creator_id: int):
         flight_altitude=mission.flight_altitude,
         waypoints=mission.waypoints,
         assigned_to_id=mission.assigned_to_id,
-        created_by_id=creator_id
+        created_by_id=created_by_id 
     )
     db.add(db_mission)
     db.commit()
