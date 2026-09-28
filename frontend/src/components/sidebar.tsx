@@ -48,7 +48,7 @@ export const Sidebar: React.FC = () => {
 
   return (
     <div className="absolute top-4 left-4 z-10 w-72 bg-gray-900 text-white p-3 rounded border border-gray-700 space-y-3 text-xs shadow-lg">
-      {/* SECTION 1: Form lập nhiệm vụ (Chỉ Admin thấy) */}
+      {/* SECTION 1: Form for Mission (Only Admin) */}
       {user?.role === 'ADMIN' ? (
         <form onSubmit={handleSave} className="space-y-2 border-b border-gray-700 pb-3">
           <b className="text-blue-400 block uppercase">Plan Mission ({waypoints.length} pts)</b>
@@ -76,7 +76,7 @@ export const Sidebar: React.FC = () => {
         <p className="text-green-400 border-b border-gray-700 pb-2">Pilot Mode: View-Only</p>
       )}
 
-      {/* SECTION 2: Danh sách nhiệm vụ (Cả Admin & Pilot) */}
+      {/* SECTION 2: List Mission (Admin & Pilot) */}
       <div>
         <b className="text-gray-300 block mb-2 uppercase">Missions ({missions.length})</b>
         <div className="space-y-1.5 max-h-56 overflow-y-auto">
@@ -92,7 +92,7 @@ export const Sidebar: React.FC = () => {
                 <div className="font-semibold text-white">{m.name}</div>
                 <div className="text-[10px] text-gray-400">{m.waypoints.length} pts • {m.assigned_to_id ? 'Assigned' : 'Unassigned'}</div>
               </div>
-              {/* Nút xóa chỉ Admin thấy */}
+              {/* Delete button */}
               {user?.role === 'ADMIN' && (
                 <button
                   onClick={(e) => { e.stopPropagation(); handleDelete(m.id); }}
