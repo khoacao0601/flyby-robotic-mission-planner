@@ -2,11 +2,13 @@
 
 import { MapViewer } from './components/mapViewer';
 import { Header } from './components/header';
+import { Sidebar } from './components/sidebar';
 
 function App() {
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-slate-950">
       <Header />
+      <Sidebar />
       <MapViewer />
     </div>
   );
