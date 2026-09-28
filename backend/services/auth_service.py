@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from core.security import create_access_token, validation_password
 from crud.crud_user import get_user_by_email
-from schemas.user import Token, UserLogin
+from schemas.user import Token, UserLogin, UserResponse
 
 def authenticate_user(db: Session, credentials: UserLogin) -> Token:
     # Get User Info
@@ -23,4 +23,4 @@ def authenticate_user(db: Session, credentials: UserLogin) -> Token:
         data={"sub": userDataFromDB.email, "role": userDataFromDB.role, "id": userDataFromDB.id}
     )
 
-    return Token(access_token=access_token, token_type="bearer")
+    return Token(access_token=access_token, token_type="bearer", user=UserResponse.model_validate(userDataFromDB))

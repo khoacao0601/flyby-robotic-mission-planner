@@ -8,11 +8,6 @@ class UserLogin(BaseModel):
     email: str
     password: str
 
-# Return data after login successfully
-class Token(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
-
 # Return user info
 class UserResponse(BaseModel):
     id: int
@@ -22,3 +17,9 @@ class UserResponse(BaseModel):
 
     # let Pydantic read data from SQLAlchemy Model
     model_config = {"from_attributes": True}
+
+# Return data after login successfully
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserResponse
