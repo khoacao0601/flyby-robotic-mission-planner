@@ -8,12 +8,9 @@ export const Header: React.FC = () => {
   const { user, login } = useAuthStore();
 
   // Switch role between Admin and Pilot
-   const switchRole = async (targetRole: 'ADMIN' | 'PILOT') => {
+   const switchRole = async (email: string, pass: string) => {
     try {
-      const email = targetRole === 'ADMIN' ? 'admin@flyby.com' : 'pilot@flyby.com';
-      const password = targetRole === 'ADMIN' ? 'admin123' : 'pilot123';
-      
-      const data = await authAPI.login(email, password);
+      const data = await authAPI.login(email, pass);
       login(data.access_token, data.user);
     } catch (err) {
       console.error('Login error:', err);
@@ -23,7 +20,7 @@ export const Header: React.FC = () => {
   // Auto-login as ADMIN on first load
   useEffect(() => {
     if (!user) {
-      switchRole('ADMIN');
+      switchRole('admin@flyby.com', 'admin123');
     }
   }, [user]);
 
@@ -39,19 +36,27 @@ export const Header: React.FC = () => {
         </span>
 
         <button
-          onClick={() => switchRole('ADMIN')}
-          disabled={user?.role === 'ADMIN'}
+          onClick={() => switchRole('admin@flyby.com', 'admin123')}
+          disabled={user?.email === 'admin@glyby.com'}
           className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs px-3 py-1.5 rounded"
         >
           Admin
         </button>
 
         <button
-          onClick={() => switchRole('PILOT')}
-          disabled={user?.role === 'PILOT'}
+          onClick={() => switchRole('pilot1@flyby.com', 'pilot123')}
+          disabled={user?.email === 'pilot1@flyby.com'}
           className="bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white text-xs px-3 py-1.5 rounded"
         >
-          Pilot
+          Pilot1
+        </button>
+
+        <button
+          onClick={() => switchRole('pilot2@flyby.com', 'pilot123')}
+          disabled={user?.email === 'pilot2@flyby.com'}
+          className="bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white text-xs px-3 py-1.5 rounded"
+        >
+          Pilot2
         </button>
       </div>
     </header>

@@ -9,41 +9,31 @@ def seed_data():
 
     # Force to create 2 table Users and Missions
     Base.metadata.create_all(bind=engine)
-
     db = SessionLocal()
+
+    test_users = [
+        {"email": "admin@flyby.com", "password": "admin123", "role": "ADMIN"},
+        {"email": "pilot1@flyby.com", "password": "pilot123", "role": "PILOT"},
+        {"email": "pilot2@flyby.com", "password": "pilot123", "role": "PILOT"},
+    ]
+
     try:
-        # Create test Admin account
-        admin = db.query(User).filter(User.email == "admin@flyby.com").first()
-        if not admin:
-            admin_user = User(
-                email='admin@flyby.com',
-                hashed_password=hash_pass("admin123"),
-                role="ADMIN",
-            )
-            db.add(admin_user)
-            print("Created Admin: admin@flyby.com / admin123")
-        else:
-            print("Admin already exists!")
-
-        # Create test PILOT account
-        pilot = db.query(User).filter(User.email == "pilot@flyby.com").first()
-        if not pilot:
-            pilot_user = User(
-                email="pilot@flyby.com",
-                hashed_password=hash_pass("pilot123"),
-                role="PILOT"
-            )
-            db.add(pilot_user)
-            print("Created Pilot: pilot@flyby.com / pilot123")
-        else:
-            print("Pilot already exists!")
-
-        # Save change to DB
+        for u in test_users:
+            existing_user = db.query(User).filter(User.email == u["email"]).first()
+            if not existing_user:
+                new_user = User(
+                    email=u["email"],
+                    hashed_password=hash_pass(u["password"]),
+                    role=u["role"],
+                )
+                db.add(new_user)
+                print(f"Created {u['role']}: {u['email']} / {u['password']}")
+            else:
+                print(f"User {u['email']} already exists!")
         db.commit()
-        print("Test Account was added successfully!")
-
+        print("-> Seeding completed successfully!")
     finally:
         db.close()
-
+        
 if __name__ == "__main__":
     seed_data()
