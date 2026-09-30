@@ -19,13 +19,13 @@ const INITIAL_VIEW = {
 
 export const MapViewer: React.FC = () => {
   const user = useAuthStore((s) => s.user);
-  const { waypoints, addWayPoint } = useMissionStore();
+  const { waypoints, addWayPoint, altitude } = useMissionStore();
 
   // Add waypoint when Admin clicks on the map
   const handleMapClick = (info: any) => {
     if (user?.role !== 'ADMIN' || !info.coordinate) return;
     const [lng, lat] = info.coordinate;
-    addWayPoint({ lng, lat, alt: 100 });
+    addWayPoint({ lng, lat, alt: altitude });
   };
 
   // 1. Semi-transparent area fill (>= 3 points)
