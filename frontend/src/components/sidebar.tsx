@@ -8,7 +8,7 @@ import type { Mission } from '../types/missions';
 
 export const Sidebar: React.FC = () => {
   const user = useAuthStore((s) => s.user);
-  const { waypoints, clearWaypoint, setSelectedMission, selectedMission } = useMissionStore();
+  const { waypoints, clearWaypoint, setSelectedMission, selectedMission, altitude, setAltitude } = useMissionStore();
 
   const [missions, setMissions] = useState<Mission[]>([]);
   const [name, setName] = useState('');
@@ -28,9 +28,9 @@ export const Sidebar: React.FC = () => {
       name,
       horizontal_speed: 15,
       altitude_mode: 'RELATIVE_TO_TAKEOFF',
-      flight_altitude: 50,
+      flight_altitude: altitude,
       assigned_to_id: pilotId,
-      waypoints: waypoints.map((w) => ({ ...w, alt: 50 })),
+      waypoints: waypoints
     });
 
     setName('');
@@ -67,6 +67,21 @@ export const Sidebar: React.FC = () => {
             <option value="2">Pilot 1 (pilot1@flyby.com)</option>
             <option value="3">Pilot 2 (pilot2@flyby.com)</option>
           </select>
+          <div className="space-y-1 bg-gray-800 p-2 rounded border border-gray-700">
+            <div className="flex justify-between text-gray-300">
+              <span>Altitude (Height):</span>
+              <span className="font-bold text-yellow-400">{altitude}m</span>
+            </div>
+            <input
+              type="range"
+              min="20"
+              max="300"
+              step="10"
+              value={altitude}
+              onChange={(e) => setAltitude(Number(e.target.value))}
+              className="w-full accent-yellow-400 cursor-pointer"
+            />
+          </div>
           <div className="flex gap-2">
             <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700 p-1.5 rounded font-medium">Save</button>
             <button type="button" onClick={clearWaypoint} className="bg-gray-700 hover:bg-gray-600 px-3 rounded">Clear</button>

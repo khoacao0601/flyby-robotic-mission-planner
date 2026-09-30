@@ -6,6 +6,8 @@ import type { Mission, Waypoint } from '../types/missions';
 interface MissionStore {
     waypoints: Waypoint[];
     selectedMission: Mission | null;
+    altitude: number;
+    setAltitude: (alt: number) => void; 
     addWayPoint: ( point: Waypoint ) => void;
     clearWaypoint: () => void;
     setSelectedMission: (mission: Mission | null) => void;
@@ -16,6 +18,12 @@ export const useMissionStore = create<MissionStore>(
     (set) => ({
         waypoints: [],
         selectedMission: null,
+        altitude: 100,
+
+        setAltitude: (alt) => set((state) => ({
+            altitude: alt,
+            waypoints: state.waypoints.map((w) => ({ ...w, alt })),
+        })),
 
         // add 1 point to list when click on map
         addWayPoint: (point) => set((state) => ({ waypoints: [...state.waypoints, point] })),
